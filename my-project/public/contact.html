@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | Uniform Solution & General Dealers | Malawi</title>
+<link rel="icon" type="image/png" href="images/Logo.png">
+<link rel="apple-touch-icon" href="images/Logo.png">
+<meta name="theme-color" content="#0099CC">
+<meta property="og:title" content="Contact Us - Uniform Solution & General Dealers">
+<meta property="og:description" content="Get in touch with Uniform Solution & General Dealers for all your uniform and clothing needs in Malawi.">
+<meta property="og:image" content="images/Logo.png">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="loader">
+    <img src="images/logo.svg" alt="Uniform Solution & General Dealers" style="height: 88px; width: auto; margin-bottom: 18px;">
+    <div class="tag">Your One Stop Uniform Shop</div>
+    <div class="spinner"></div>
+</div>
+
+<script type="application/json" id="site-data">
+{"settings":{"businessName":"Uniform Solution & General Dealers","tagline":"Your One Stop Uniform Shop","whatsappNumber":"265990162150","phones":["0999 530 829","0882 648 995"],"email":"chapungae@gmail.com","location":"Area 49 Shire, Shop #30, Lilongwe, Malawi","hours":"Mon-Sat: 7:30 AM - 6:00 PM","heroHeadline":"Your One Stop Shop for Uniforms & More in Malawi","heroSubheadline":"School Uniforms · Corporate Wear · Safety Gear · Men's Suits · Screen Printing","aboutText":"Welcome to Uniform Solution & General Dealers, your premier destination for all uniform and clothing needs in Malawi. Located in the heart of Area 49 Shire, Lilongwe, we pride ourselves on being a trusted supplier of high-quality garments."},"categories":[],"products":[]}
+</script>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar">
+    <div class="container announcement-inner">
+        <div class="announcement-item"><i class="fas fa-bell"></i> Welcome to Uniform Solution</div>
+        <div class="announcement-items">
+            <div class="announcement-item"><i class="fas fa-truck"></i> Delivering Across Malawi</div>
+            <div class="announcement-item"><i class="fas fa-clock"></i> <span id="abHours">Mon-Sat: 7:30 AM - 6:00 PM</span></div>
+            <div class="announcement-item phone keep-mobile"><i class="fas fa-phone"></i> <span id="abPhone">+265 990 162 150</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN HEADER -->
+<header class="main-header">
+    <div class="container main-header-inner">
+        <div class="header-row-top">
+            <a href="index.html" class="header-logo">
+                <img src="images/logo.svg" alt="Uniform Solution & General Dealers">
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-icons">
+                <button class="hdr-icon-btn" id="wishlistBtn" aria-label="Wishlist">
+                    <i class="far fa-heart"></i>
+                    <span>Wishlist</span>
+                    <span class="hdr-badge" id="wishlistBadge" style="display:none;">0</span>
+                </button>
+                <button class="hdr-icon-btn" id="cartBtn" aria-label="Cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart</span>
+                    <span class="hdr-badge cart-badge" id="cartBadge" style="display:none;">0</span>
+                </button>
+            </div>
+        </div>
+        <form class="header-search" id="searchForm" role="search" action="index.html">
+            <input type="search" id="searchInput" placeholder="Search uniforms, shoes, bags & more..." aria-label="Search products">
+            <button type="submit" aria-label="Search"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+</header>
+
+<!-- MOBILE NAVIGATION DRAWER -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+<aside class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+    <div class="mobile-nav-header">
+        <img src="images/logo.svg" alt="Uniform Solution" class="mobile-nav-logo">
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <nav class="mobile-nav-links">
+        <a href="index.html" class="mobile-nav-link"><i class="fas fa-home"></i> Home</a>
+        <a href="index.html#products" class="mobile-nav-link"><i class="fas fa-shopping-bag"></i> Shop</a>
+        <a href="about.html" class="mobile-nav-link"><i class="fas fa-info-circle"></i> About</a>
+        <a href="contact.html" class="mobile-nav-link active"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+    <div class="mobile-nav-footer">
+        <div class="mobile-nav-contact">
+            <a id="mobileNavWa" href="#" target="_blank" class="mobile-nav-contact-btn">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a id="mobileNavPhone" href="#" class="mobile-nav-contact-btn">
+                <i class="fas fa-phone"></i> Call Us
+            </a>
+        </div>
+    </div>
+</aside>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+    <div class="container">
+        <h1>Get in <span>Touch</span></h1>
+        <p class="page-sub">We're here to help with any questions or orders.</p>
+    </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="contact page-section">
+    <div class="container">
+        <div class="contact-grid">
+            <div>
+                <div class="info-card"><div class="info-icon"><i class="fas fa-map-marker-alt"></i></div><div><h4>Visit Our Shop</h4><p id="cLoc">—</p></div></div>
+                <div class="info-card"><div class="info-icon"><i class="fas fa-phone-alt"></i></div><div><h4>Call Us</h4><p id="cPhones">—</p></div></div>
+                <div class="info-card"><div class="info-icon"><i class="fab fa-whatsapp"></i></div><div><h4>WhatsApp</h4><p id="cWa">—</p></div></div>
+                <div class="info-card"><div class="info-icon"><i class="fas fa-envelope"></i></div><div><h4>Email</h4><p id="cEmail">—</p></div></div>
+                <div class="info-card"><div class="info-icon"><i class="fas fa-clock"></i></div><div><h4>Business Hours</h4><p id="cHours">—</p></div></div>
+            </div>
+            <div class="form-card">
+                <h3>Quick Order Form</h3>
+                <form id="waForm">
+                    <label>Your Name</label>
+                    <input type="text" id="fName" placeholder="John Doe" required>
+                    <label>Phone</label>
+                    <input type="tel" id="fPhone" placeholder="09..." required>
+                    <label>Product of Interest</label>
+                    <select id="fProduct" required>
+                        <option value="" disabled selected>Select a category</option>
+                    </select>
+                    <label>Details</label>
+                    <textarea id="fMsg" placeholder="Sizes, colors, quantity..." required></textarea>
+                    <button type="submit"><i class="fab fa-whatsapp"></i> Send via WhatsApp</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-v2">
+    <div class="container">
+        <div class="footer-v2-grid">
+            <div class="footer-v2-col brand">
+                <a href="index.html" class="footer-v2-logo"><img src="images/logo.svg" alt="Uniform Solution & General Dealers"></a>
+                <p>We provide high quality uniforms, corporate wear, safety gear, men's suits, bags and more across Malawi.</p>
+                <div class="socials">
+                    <a id="fWa" href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://web.facebook.com/profile.php?id=61573440360847" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" id="fIg" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-v2-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#products">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-v2-col">
+                <h4>Customer Care</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Delivery Information</a></li>
+                    <li><a href="contact.html">Returns &amp; Exchanges</a></li>
+                    <li><a href="contact.html">Terms &amp; Conditions</a></li>
+                    <li><a href="contact.html">Privacy Policy</a></li>
+                    <li><a href="contact.html">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-v2-col contact-info">
+                <h4>Contact Us</h4>
+                <ul id="fContact">
+                    <li><i class="fas fa-phone"></i> <span id="fPhone">—</span></li>
+                    <li><i class="fab fa-whatsapp"></i> <span id="fWaNum">—</span></li>
+                    <li><i class="fas fa-envelope"></i> <span id="fEmail">—</span></li>
+                    <li><i class="fas fa-map-marker-alt"></i> <span id="fLoc">—</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-v2-bottom">
+            <div>&copy; <span id="fYear"></span> Uniform Solution. All Rights Reserved.</div>
+            <div class="made-with">Designed with <i class="fas fa-heart"></i> in Malawi</div>
+        </div>
+    </div>
+</footer>
+
+<a id="floatWa" class="float-wa" href="#" target="_blank" title="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+<button class="to-top" id="toTop" title="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+<!-- MOBILE BOTTOM NAVIGATION -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Mobile navigation">
+    <a href="index.html" class="mbn-item">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="index.html#products" class="mbn-item">
+        <i class="fas fa-shopping-bag"></i>
+        <span>Shop</span>
+    </a>
+    <a href="index.html#categories" class="mbn-item">
+        <i class="fas fa-th-large"></i>
+        <span>Categories</span>
+    </a>
+    <button type="button" class="mbn-item mbn-cart" id="mbnCartBtn" aria-label="Open cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="mbn-badge" id="mbnCartBadge" style="display:none;">0</span>
+        <span>Cart</span>
+    </button>
+    <a id="mbnWa" href="#" target="_blank" class="mbn-item mbn-wa">
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat</span>
+    </a>
+</nav>
+
+<script src="app.js"></script>
+</body>
+</html>

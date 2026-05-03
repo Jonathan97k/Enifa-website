@@ -974,6 +974,41 @@ input, textarea, select { font-family: inherit; font-size: inherit; outline: non
 .help-card.help-wa .help-card-text .btn { background: #25D366; color: #fff; }
 .help-card.help-wa .help-card-text .btn:hover { background: #1da851; }
 
+/* ===== Page Header ===== */
+.page-header {
+    background: var(--primary-grad);
+    color: #fff;
+    padding: 60px 0 40px;
+    text-align: center;
+}
+.page-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.page-header h1 span {
+    color: var(--accent);
+}
+.page-sub {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+@media (max-width: 768px) {
+    .page-header { padding: 48px 0 32px; }
+    .page-header h1 { font-size: 1.7rem; }
+    .page-sub { font-size: 0.9rem; }
+}
+
+/* ===== Page Section ===== */
+.page-section {
+    padding: 60px 0;
+}
+@media (max-width: 768px) {
+    .page-section { padding: 40px 0; }
+}
+
 /* ===== About Section ===== */
 .about { padding: 80px 0; background: #fff; }
 .about-grid {

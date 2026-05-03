@@ -546,7 +546,7 @@ app.post('/api/git/push', async (req, res) => {
 
         // Only sync if git root is different from server dir (i.e., parent repo setup)
         if (path.resolve(gitRoot) !== path.resolve(ROOT_DIR)) {
-            const syncFiles = ['index.html', 'app.js'];
+            const syncFiles = ['index.html', 'about.html', 'contact.html', 'app.js', 'styles.css'];
             for (const f of syncFiles) {
                 const src = path.join(PUBLIC_DIR, f);
                 const dst = path.join(gitRoot, f);
