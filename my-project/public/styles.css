@@ -1579,12 +1579,29 @@ img, video, iframe { max-width: 100%; height: auto; }
     html { scroll-padding-top: 110px; font-size: 15px; }
     .container { padding: 0 16px; }
 
-    /* Announcement Bar — Show only essential items */
-    .announcement-bar { font-size: 0.72rem; padding: 7px 0; }
-    .announcement-inner { justify-content: center; gap: 14px; flex-direction: row; }
-    .announcement-items { gap: 14px; justify-content: center; }
-    .announcement-item.phone { display: none; }
+    /* Announcement Bar — Marquee (right to left) on mobile */
+    .announcement-bar { font-size: 0.72rem; padding: 7px 0; overflow: hidden; }
+    .announcement-bar .container { padding: 0; max-width: 100%; position: relative; }
+    .announcement-inner {
+        display: inline-flex;
+        flex-wrap: nowrap;
+        gap: 32px;
+        width: max-content;
+        padding-left: 100%;
+        animation: announce-marquee 25s linear infinite;
+    }
+    .announcement-items {
+        display: inline-flex;
+        flex-wrap: nowrap;
+        gap: 32px;
+    }
+    .announcement-item { white-space: nowrap; flex-shrink: 0; }
+    .announcement-item.phone { display: inline-flex; }
     .keep-mobile { display: inline-flex !important; }
+    @keyframes announce-marquee {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-100%); }
+    }
 
     /* Header — Stacked Mobile Layout */
     .main-header { position: sticky; top: 0; }

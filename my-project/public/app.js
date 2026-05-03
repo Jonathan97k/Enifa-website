@@ -287,6 +287,7 @@
 
     function renderCategories() {
         const grid = $('#catGrid');
+        if (!grid) return;
         if (!state.categories.length) {
             grid.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><br>No categories yet. Add some from the <a href="/admin">admin portal</a>.</div>`;
             return;
@@ -412,22 +413,26 @@
 
     function renderAbout() {
         const s = state.settings;
-        $('#aboutP').textContent = s.aboutText || '';
-        $('#aboutLoc').textContent = s.location || '—';
+        const ap = $('#aboutP'); if (ap) ap.textContent = s.aboutText || '';
+        const al = $('#aboutLoc'); if (al) al.textContent = s.location || '—';
         const wrap = $('#specialties');
-        wrap.innerHTML = state.categories.slice(0, 6).map(c =>
-            `<a class="spec-item" href="#category=${esc(c.id)}"><span class="icon">${esc(c.icon || '🛍️')}</span><span>${esc(c.title)}</span></a>`
-        ).join('');
+        if (wrap) {
+            wrap.innerHTML = state.categories.slice(0, 6).map(c =>
+                `<a class="spec-item" href="index.html#category=${esc(c.id)}"><span class="icon">${esc(c.icon || '🛍️')}</span><span>${esc(c.title)}</span></a>`
+            ).join('');
+        }
     }
 
     function renderContact() {
         const s = state.settings;
-        $('#cLoc').textContent = s.location || '—';
+        const setTxt = (sel, txt) => { const el = $(sel); if (el) el.textContent = txt || '—'; };
+        const setHtml = (sel, html) => { const el = $(sel); if (el) el.innerHTML = html; };
+        setTxt('#cLoc', s.location);
         const phones = (s.phones || []).filter(Boolean);
-        $('#cPhones').innerHTML = phones.length ? phones.map(p => `<a href="tel:${esc(p.replace(/\s/g,''))}">${esc(p)}</a>`).join('<br>') : '—';
-        $('#cWa').innerHTML     = s.whatsappNumber ? `<a href="${waLink(s.whatsappNumber,'')}" target="_blank">+${esc(s.whatsappNumber)}</a>` : '—';
-        $('#cEmail').innerHTML   = s.email ? `<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>` : '—';
-        $('#cHours').textContent = s.hours || '—';
+        setHtml('#cPhones', phones.length ? phones.map(p => `<a href="tel:${esc(p.replace(/\s/g,''))}">${esc(p)}</a>`).join('<br>') : '—');
+        setHtml('#cWa', s.whatsappNumber ? `<a href="${waLink(s.whatsappNumber,'')}" target="_blank">+${esc(s.whatsappNumber)}</a>` : '—');
+        setHtml('#cEmail', s.email ? `<a href="mailto:${esc(s.email)}">${esc(s.email)}</a>` : '—');
+        setTxt('#cHours', s.hours);
     }
 
     function renderFooter() {
@@ -445,20 +450,24 @@
 
     function populateProductSelect() {
         const select = $('#fProduct');
+        if (!select) return;
         select.innerHTML = '<option value="" disabled selected>Select a category</option>' +
             state.categories.map(c => `<option value="${esc(c.title)}">${esc(c.title)}</option>`).join('');
     }
 
     // --------- Contact form ---------
-    $('#waForm').addEventListener('submit', e => {
-        e.preventDefault();
-        const name    = $('#fName').value.trim();
-        const phone   = $('#fPhone').value.trim();
-        const product = $('#fProduct').value;
-        const msg     = $('#fMsg').value.trim();
-        const text = `Hello ${state.settings.businessName || ''}!\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Product:* ${product}\n*Details:* ${msg}\n\nPlease assist me.`;
-        window.open(waLink(state.settings.whatsappNumber, text), '_blank');
-    });
+    const waFormEl = $('#waForm');
+    if (waFormEl) {
+        waFormEl.addEventListener('submit', e => {
+            e.preventDefault();
+            const name    = $('#fName').value.trim();
+            const phone   = $('#fPhone').value.trim();
+            const product = $('#fProduct').value;
+            const msg     = $('#fMsg').value.trim();
+            const text = `Hello ${state.settings.businessName || ''}!\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Product:* ${product}\n*Details:* ${msg}\n\nPlease assist me.`;
+            window.open(waLink(state.settings.whatsappNumber, text), '_blank');
+        });
+    }
 
     // --------- Navigation / Routing ---------
     function parseHash() {
