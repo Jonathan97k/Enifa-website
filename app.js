@@ -828,6 +828,12 @@
             badge.textContent = count;
             badge.classList.toggle('active', count > 0);
             badge.style.display = count > 0 ? 'flex' : 'none';
+            // Sync mobile bottom-nav cart badge
+            const mbnBadge = $('#mbnCartBadge');
+            if (mbnBadge) {
+                mbnBadge.textContent = count;
+                mbnBadge.style.display = count > 0 ? 'flex' : 'none';
+            }
 
             const body = $('#cartBody');
             const footer = $('#cartFooter');
@@ -935,6 +941,30 @@
     Cart.render();
 
     $('#cartBtn').addEventListener('click', () => Cart.open());
+    // Mobile bottom-nav cart button
+    const mbnCart = $('#mbnCartBtn');
+    if (mbnCart) mbnCart.addEventListener('click', () => Cart.open());
+
+    // Mobile bottom-nav active state on scroll
+    const mbnItems = $$('.mbn-item[data-nav]');
+    const sections = ['home', 'products', 'categories'].map(id => document.getElementById(id)).filter(Boolean);
+    function updateMbnActive() {
+        const scrollY = window.scrollY + 120;
+        let active = 'home';
+        sections.forEach(sec => { if (sec.offsetTop <= scrollY) active = sec.id; });
+        mbnItems.forEach(it => it.classList.toggle('active', it.dataset.nav === active));
+    }
+    if (sections.length) {
+        window.addEventListener('scroll', updateMbnActive, { passive: true });
+        updateMbnActive();
+    }
+
+    // Wire WhatsApp link in bottom nav
+    const mbnWa = $('#mbnWa');
+    if (mbnWa) {
+        const waNum = (window.SITE_DATA && window.SITE_DATA.settings && window.SITE_DATA.settings.whatsappNumber) || '265990162150';
+        mbnWa.href = `https://wa.me/${waNum}`;
+    }
     $('#cartClose').addEventListener('click', () => Cart.close());
     $('#cartOverlay').addEventListener('click', () => Cart.close());
     $('#btnCheckout').addEventListener('click', () => Cart.checkout());
