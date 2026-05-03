@@ -1079,45 +1079,57 @@
         });
     }
 
-    // --------- Mobile Navigation ---------
-    const mobileMenuBtn = $('#mobileMenuBtn');
-    const mobileNavDrawer = $('#mobileNavDrawer');
-    const mobileNavOverlay = $('#mobileNavOverlay');
-    const mobileNavClose = $('#mobileNavClose');
-
+    // --------- Mobile Navigation (event-delegated for reliability) ---------
     function openMobileNav() {
-        mobileNavDrawer.classList.add('active');
-        mobileNavOverlay.classList.add('active');
+        const drawer = $('#mobileNavDrawer');
+        const overlay = $('#mobileNavOverlay');
+        if (!drawer) { console.warn('[nav] drawer not found'); return; }
+        drawer.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        drawer.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
     }
 
     function closeMobileNav() {
-        mobileNavDrawer.classList.remove('active');
-        mobileNavOverlay.classList.remove('active');
+        const drawer = $('#mobileNavDrawer');
+        const overlay = $('#mobileNavOverlay');
+        if (drawer) {
+            drawer.classList.remove('active');
+            drawer.setAttribute('aria-hidden', 'true');
+        }
+        if (overlay) overlay.classList.remove('active');
         document.body.style.overflow = '';
     }
 
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', openMobileNav);
-    }
-    if (mobileNavClose) {
-        mobileNavClose.addEventListener('click', closeMobileNav);
-    }
-    if (mobileNavOverlay) {
-        mobileNavOverlay.addEventListener('click', closeMobileNav);
-    }
-
-    // Close mobile nav when clicking a nav link
-    $$('.mobile-nav-link').forEach(link => {
-        link.addEventListener('click', closeMobileNav);
+    // Single document-delegated handler — works even if elements are re-rendered
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#mobileMenuBtn')) {
+            e.preventDefault();
+            openMobileNav();
+            return;
+        }
+        if (e.target.closest('#mobileNavClose') || e.target.closest('#mobileNavOverlay')) {
+            e.preventDefault();
+            closeMobileNav();
+            return;
+        }
+        if (e.target.closest('.mobile-nav-link')) {
+            // Allow link to navigate, then close drawer
+            setTimeout(closeMobileNav, 50);
+        }
     });
 
     // Close mobile nav on escape key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileNavDrawer?.classList.contains('active')) {
-            closeMobileNav();
+        if (e.key === 'Escape') {
+            const drawer = $('#mobileNavDrawer');
+            if (drawer && drawer.classList.contains('active')) closeMobileNav();
         }
     });
+
+    // Expose for debugging
+    window.openMobileNav = openMobileNav;
+    window.closeMobileNav = closeMobileNav;
 
     // --------- Back to top ---------
     const toTop = $('#toTop');
