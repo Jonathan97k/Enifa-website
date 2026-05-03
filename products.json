@@ -1,0 +1,124 @@
+{
+  "settings": {
+    "whatsappNumber": "265983445704",
+    "businessName": "Uniform Solution & General Dealers",
+    "location": "Area 49 Shire, Shop #30, Lilongwe, Malawi",
+    "phones": ["0983 445 704", "0990 162 150"],
+    "hours": "Mon-Sat: 7:30 AM - 6:00 PM"
+  },
+  "categories": [
+    {
+      "id": "school-uniforms",
+      "title": "School Uniforms",
+      "icon": "🏫",
+      "description": "Complete uniforms including shirts, trousers, jerseys, socks, and shoes for all schools.",
+      "images": [
+        "Images/School Uniforms.jpg",
+        "Images/School Shirt.jpg",
+        "Images/School Trouser.jpg",
+        "Images/School Jersey.jpg",
+        "Images/School Shoes.jpg"
+      ]
+    },
+    {
+      "id": "corporate-wear",
+      "title": "Corporate Wear",
+      "icon": "👔",
+      "description": "Professional corporate clothing and uniforms for businesses and institutions."
+    },
+    {
+      "id": "safety-gear",
+      "title": "Safety & Security Gear",
+      "icon": "🦺",
+      "description": "High visibility vests, boots, helmets, and complete security guard uniforms."
+    },
+    {
+      "id": "mens-suits",
+      "title": "Men's Suits",
+      "icon": "🤵",
+      "description": "High-quality tailored and ready-made men's suits for all formal occasions."
+    },
+    {
+      "id": "bags-luggage",
+      "title": "Bags & Luggage",
+      "icon": "👜",
+      "description": "Durable school bags, laptop bags, travel luggage, and backpacks."
+    },
+    {
+      "id": "perfumes-lotions",
+      "title": "Perfumes & Lotions",
+      "icon": "🌸",
+      "description": "A wide selection of body lotions, sprays, and designer perfumes."
+    },
+    {
+      "id": "screen-printing",
+      "title": "Screen Printing",
+      "icon": "🖨️",
+      "description": "Professional screen and digital printing for t-shirts, caps, and banners."
+    },
+    {
+      "id": "plain-tshirts",
+      "title": "Plain T-Shirts",
+      "icon": "👕",
+      "description": "High-quality plain pilot t-shirts available in all sizes and colors."
+    },
+    {
+      "id": "sweaters-jerseys",
+      "title": "Sweaters & Jerseys",
+      "icon": "🧥",
+      "description": "Warm and durable sweaters and jerseys for school and corporate needs."
+    }
+  ],
+  "products": [
+    {
+      "id": "school-shirt",
+      "name": "School Shirt",
+      "icon": "👔",
+      "images": [
+        "Images/School Shirt.jpg"
+      ],
+      "description": "Quality cotton school shirts for all schools in Malawi.",
+      "price": "Price on Request"
+    },
+    {
+      "id": "school-trouser",
+      "name": "School Trouser",
+      "icon": "👖",
+      "image": "Images/School Trouser.jpg",
+      "description": "Durable and perfectly tailored school trousers in all sizes.",
+      "price": "Price on Request"
+    },
+    {
+      "id": "safety-vest",
+      "name": "Safety Vest",
+      "icon": "🦺",
+      "image": "Images/Safety Vest.jpg",
+      "description": "High visibility reflective safety vests for workplaces.",
+      "price": "Price on Request"
+    },
+    {
+      "id": "mens-suit",
+      "name": "Men's Suit",
+      "icon": "🤵",
+      "image": "Images/Men's Suit.jpg",
+      "description": "Professional, sharp, and elegant suits for all occasions.",
+      "price": "Price on Request"
+    },
+    {
+      "id": "school-jersey",
+      "name": "School Jersey",
+      "icon": "🧥",
+      "image": "Images/School Jersey.jpg",
+      "description": "Warm school jerseys. Embroidery options available.",
+      "price": "Price on Request"
+    },
+    {
+      "id": "school-shoes",
+      "name": "School Shoes",
+      "icon": "👟",
+      "image": "Images/School Shoes.jpg",
+      "description": "Quality, durable genuine leather school shoes in all sizes.",
+      "price": "Price on Request"
+    }
+  ]
+}

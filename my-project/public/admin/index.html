@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#161b22">
+<title>Admin Portal — Uniform Solution</title>
+<link rel="icon" type="image/png" href="../images/Logo.png">
+<link rel="apple-touch-icon" href="../images/Logo.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="brand">
+        <span class="admin-logo" role="img" aria-label="Uniform Solution & General Dealers"></span>
+        <p>Content Manager</p>
+    </div>
+    <nav class="nav" id="nav">
+        <button class="active" data-section="categories"><i class="fas fa-layer-group"></i> Categories <span class="count" id="countCategories">0</span></button>
+        <button data-section="products"><i class="fas fa-box"></i> Products <span class="count" id="countProducts">0</span></button>
+        <button data-section="settings"><i class="fas fa-cog"></i> Site Settings</button>
+        <button data-section="git"><i class="fab fa-github"></i> Push to GitHub</button>
+    </nav>
+    <div class="sidebar-foot">
+        <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> View public site</a>
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+    <!-- CATEGORIES -->
+    <section id="section-categories" class="section">
+        <div class="page-header">
+            <div>
+                <h2><i class="fas fa-layer-group"></i> Categories</h2>
+                <div class="subtitle">Top-level groups shown on the home page. Products are filed under these.</div>
+            </div>
+            <button class="btn btn-primary" id="btnNewCategory"><i class="fas fa-plus"></i> New Category</button>
+        </div>
+
+        <div class="card form-card" id="formCard-category" hidden>
+            <div class="form-head">
+                <h3><i class="fas fa-plus-circle"></i> <span id="catFormTitle">Add category</span></h3>
+                <button class="icon-btn" data-close-form="category"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="form-category">
+                <input type="hidden" name="id" id="catId">
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Title *</label>
+                        <input type="text" name="title" required placeholder="e.g. School Uniforms">
+                    </div>
+                    <div class="field">
+                        <label>Icon (emoji)</label>
+                        <input type="text" name="icon" maxlength="4" placeholder="🏫">
+                    </div>
+                    <div class="field full">
+                        <label>Description</label>
+                        <textarea name="description" placeholder="One or two sentences describing this category..."></textarea>
+                    </div>
+                    <div class="field full">
+                        <label>Images</label>
+                        <div class="image-manager" id="catImgManager"></div>
+                        <label class="file-drop">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span class="drop-text">Click to add image(s)</span>
+                            <input type="file" name="images" accept="image/*" multiple>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn" data-close-form="category">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="save-label">Save Category</span></button>
+                </div>
+            </form>
+        </div>
+
+        <div id="list-categories" class="item-grid"></div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="section-products" class="section" hidden>
+        <div class="page-header">
+            <div>
+                <h2><i class="fas fa-box"></i> Products</h2>
+                <div class="subtitle">Each product belongs to a category — the same categories used on the website.</div>
+            </div>
+            <button class="btn btn-primary" id="btnNewProduct"><i class="fas fa-plus"></i> New Product</button>
+        </div>
+
+        <div class="card form-card" id="formCard-product" hidden>
+            <div class="form-head">
+                <h3><i class="fas fa-plus-circle"></i> <span id="prodFormTitle">Add product</span></h3>
+                <button class="icon-btn" data-close-form="product"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="form-product">
+                <input type="hidden" name="id" id="prodId">
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Product name *</label>
+                        <input type="text" name="name" required placeholder="e.g. School Shirt">
+                    </div>
+                    <div class="field">
+                        <label>Category *</label>
+                        <select name="categoryId" id="prodCategorySelect" required>
+                            <option value="" disabled selected>— Select a category —</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Price <span style="color:#6b7280;font-weight:400;">(e.g. MK 15,000 — leave blank for "Price on Request")</span></label>
+                        <input type="text" name="price" placeholder="MK 15,000">
+                    </div>
+                    <div class="field full">
+                        <label>Description</label>
+                        <textarea name="description" placeholder="Short description..."></textarea>
+                    </div>
+                    <div class="field full">
+                        <label>Images</label>
+                        <div class="image-manager" id="prodImgManager"></div>
+                        <label class="file-drop">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span class="drop-text">Click to add image(s)</span>
+                            <input type="file" name="images" accept="image/*" multiple>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn" data-close-form="product">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="save-label">Save Product</span></button>
+                </div>
+            </form>
+        </div>
+
+        <div class="filter-bar">
+            <label>Filter by category:</label>
+            <select id="prodFilter">
+                <option value="">All categories</option>
+            </select>
+        </div>
+
+        <div id="list-products" class="item-grid"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="section-settings" class="section" hidden>
+        <div class="page-header">
+            <div>
+                <h2><i class="fas fa-cog"></i> Site Settings</h2>
+                <div class="subtitle">These values appear on the public website (navbar, hero, contact, footer).</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <form id="form-settings">
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Business name</label>
+                        <input type="text" name="businessName" placeholder="Uniform Solution & General Dealers">
+                    </div>
+                    <div class="field">
+                        <label>Tagline</label>
+                        <input type="text" name="tagline" placeholder="Your One Stop Uniform Shop">
+                    </div>
+                    <div class="field">
+                        <label>WhatsApp number (international, no +)</label>
+                        <input type="text" name="whatsappNumber" placeholder="265983445704">
+                    </div>
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="info@example.com">
+                    </div>
+                    <div class="field full">
+                        <label>Phones (one per line)</label>
+                        <textarea name="phones" placeholder="0983 445 704&#10;0990 162 150"></textarea>
+                    </div>
+                    <div class="field full">
+                        <label>Location</label>
+                        <input type="text" name="location" placeholder="Area 49 Shire, Shop #30, Lilongwe, Malawi">
+                    </div>
+                    <div class="field">
+                        <label>Business hours</label>
+                        <input type="text" name="hours" placeholder="Mon-Sat: 7:30 AM - 6:00 PM">
+                    </div>
+                    <div class="field full">
+                        <label>Hero headline</label>
+                        <input type="text" name="heroHeadline" placeholder="Your One Stop Shop for Uniforms &amp; More in Malawi">
+                    </div>
+                    <div class="field full">
+                        <label>Hero subheadline</label>
+                        <input type="text" name="heroSubheadline">
+                    </div>
+                    <div class="field full">
+                        <label>About text</label>
+                        <textarea name="aboutText" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Settings</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- GIT -->
+    <section id="section-git" class="section" hidden>
+        <div class="page-header">
+            <div>
+                <h2><i class="fab fa-github"></i> Publish to GitHub</h2>
+                <div class="subtitle">Syncs all changes (products, images, settings) to the public repo and deploys to your live site. Handles conflicts automatically.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:16px;"><i class="fas fa-cog"></i> Repository settings</h3>
+            <div class="subtitle" style="margin-bottom:16px;">Configure which GitHub repo and folder to deploy. Saved between sessions. Set this once per project.</div>
+            <div class="form-grid">
+                <div class="field full">
+                    <label>Repository URL</label>
+                    <input type="text" id="cfgRepoUrl" placeholder="https://github.com/username/repo.git">
+                    <div class="hint">HTTPS or SSH URL. Use HTTPS with a Personal Access Token for password auth.</div>
+                </div>
+                <div class="field full">
+                    <label>Project folder (absolute path)</label>
+                    <input type="text" id="cfgProjectPath" placeholder="C:\Websites\REAL PROJECTS\ENIE\Sample">
+                    <div class="hint">Folder containing your repo files. Must exist on this machine.</div>
+                </div>
+                <div class="field">
+                    <label>Branch</label>
+                    <input type="text" id="cfgBranch" value="main" placeholder="main">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button id="btnSaveCfg" class="btn btn-primary"><i class="fas fa-save"></i> Save settings</button>
+            </div>
+            <div id="cfgOutput" class="terminal" style="margin-top:16px;display:none;"></div>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:16px;"><i class="fas fa-code-branch"></i> Current status</h3>
+            <div id="gitStatus" class="terminal">Click "Refresh status" to see pending changes.</div>
+            <div class="form-actions">
+                <button id="btnStatus" class="btn"><i class="fas fa-sync-alt"></i> Refresh status</button>
+                <button id="btnRepair" class="btn" title="Fix corrupt git index"><i class="fas fa-wrench"></i> Repair index</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:16px;"><i class="fas fa-upload"></i> Commit &amp; push</h3>
+            <div class="field">
+                <label>Commit message</label>
+                <input type="text" id="commitMessage" value="content update">
+            </div>
+            <div class="form-actions">
+                <button id="btnPush" class="btn btn-success"><i class="fab fa-github"></i> Sync &amp; Push to GitHub</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:16px;"><i class="fas fa-terminal"></i> Output</h3>
+            <div id="gitOutput" class="terminal">(idle)</div>
+        </div>
+    </section>
+
+</main>
+</div>
+
+<div class="toast-stack" id="toasts"></div>
+
+<script src="/admin/admin.js"></script>
+</body>
+</html>
