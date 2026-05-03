@@ -1509,6 +1509,14 @@ img, video, iframe { max-width: 100%; height: auto; }
 @media (max-width: 1024px) {
     .container { padding: 0 20px; }
 
+    /* Hide cat-menu on tablet too — bottom nav / hamburger menu replaces it */
+    .cat-menu { display: none; }
+
+    /* Show hamburger menu on tablet */
+    .mobile-menu-btn { display: flex; }
+    /* Hide top header icons on tablet — bottom nav handles cart */
+    .header-icons { display: none; }
+
     /* Hero */
     .hero-v2-grid { grid-template-columns: 1fr; gap: 32px; padding: 56px 0; min-height: auto; }
     .hero-v2-image { aspect-ratio: 16/10; max-height: 480px; }
@@ -1574,53 +1582,11 @@ img, video, iframe { max-width: 100%; height: auto; }
     .header-search input { padding: 10px 14px; font-size: 0.88rem; }
     .header-search button { padding: 0 14px; }
 
-    /* Category Menu — Collapsible Accordion */
-    .cat-menu { position: relative; top: auto; box-shadow: 0 2px 4px rgba(0,0,0,.04); }
-    .cat-menu-inner { flex-direction: column; padding: 0; }
-    .cat-menu-all {
-        width: 100%;
-        padding: 13px 20px;
-        font-size: 0.88rem;
-        border-radius: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .cat-menu-all .label-full { display: inline; }
-    .cat-menu-all::after {
-        content: '\f078';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        font-size: 0.75rem;
-        transition: transform 0.3s;
-    }
-    .cat-menu-all.active::after { transform: rotate(180deg); }
-    .cat-menu-links {
-        display: none;
-        width: 100%;
-        flex-direction: column;
-        background: #fff;
-        border-top: 1px solid var(--line);
-        animation: slideDown 0.25s ease-out;
-    }
-    .cat-menu-links.active { display: flex; }
-    .cat-menu-links a {
-        flex: none;
-        width: 100%;
-        padding: 14px 20px;
-        text-align: left;
-        justify-content: flex-start;
-        border-bottom: 1px solid var(--line-soft);
-        font-size: 0.9rem;
-    }
-    .cat-menu-links a:last-child { border-bottom: none; }
-    .cat-menu-links a.active::after { display: none; }
-    .cat-menu-links a.active { background: var(--primary-light); }
+    /* Category Menu — Hidden on mobile/tablet (bottom nav replaces it) */
+    .cat-menu { display: none; }
 
-    @keyframes slideDown {
-        from { opacity: 0; transform: translateY(-8px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    /* Drawer footer (Call/WhatsApp) — Hidden, bottom nav handles it */
+    .mobile-nav-footer { display: none; }
 
     /* Hero — Image first, then text (reverse order) */
     .hero-v2 { background: linear-gradient(180deg, var(--bg-soft) 0%, #fff 100%); }
@@ -1936,14 +1902,12 @@ img, video, iframe { max-width: 100%; height: auto; }
     line-height: 1;
 }
 
-/* Hide redundant floating buttons when bottom nav is active */
-@media (max-width: 768px) {
+/* Show bottom nav on tablet & mobile (≤1024px) */
+@media (max-width: 1024px) {
     .mobile-bottom-nav { display: flex; }
     body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
     .float-wa { display: none; }
     .to-top { bottom: calc(80px + env(safe-area-inset-bottom)); right: 14px; }
-    /* Hide top header wishlist/cart icons since bottom nav has cart */
-    .header-icons .hdr-icon-btn { padding: 7px; }
 }
 
 /* ===== EXTRA SMALL (≤360px) ===== */
