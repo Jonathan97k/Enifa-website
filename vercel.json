@@ -1,0 +1,15 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index" }
+  ],
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
+      ]
+    }
+  ]
+}

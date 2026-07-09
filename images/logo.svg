@@ -1,0 +1,278 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 60" width="100%" height="auto" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <!-- Gradients for depth -->
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e0e0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#facc15;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#fde047;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#eab308;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <style>
+    /* Base styles */
+    .logo-container {
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: left center;
+    }
+    .logo-container:hover {
+      transform: scale(1.03);
+    }
+    
+    /* Shield animations */
+    .shield-group {
+      transform-origin: 30px 30px;
+      animation: shieldBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+      opacity: 0;
+    }
+    
+    @keyframes shieldBounce {
+      0% {
+        transform: scale(0) rotate(-10deg);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1) rotate(2deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+    
+    /* Letter stroke drawing animation */
+    .letter-stroke {
+      fill: none;
+      stroke: #0ea5e9;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawStroke 0.6s ease forwards;
+    }
+    
+    .letter-stroke-u {
+      animation-delay: 0.5s;
+    }
+    
+    .letter-stroke-s {
+      animation-delay: 0.8s;
+    }
+    
+    @keyframes drawStroke {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    
+    /* Filled letters fade in after stroke animation */
+    .letter-fill {
+      fill: #0ea5e9;
+      opacity: 0;
+      animation: fadeInLetter 0.4s ease forwards;
+    }
+    
+    .letter-fill-u {
+      animation-delay: 1s;
+    }
+    
+    .letter-fill-s {
+      animation-delay: 1.2s;
+    }
+    
+    @keyframes fadeInLetter {
+      to {
+        opacity: 1;
+      }
+    }
+    
+    /* Shimmer animation on gold accent */
+    .shimmer-element {
+      animation: shimmer 3s ease-in-out infinite;
+      animation-delay: 2s;
+    }
+    
+    @keyframes shimmer {
+      0%, 100% {
+        opacity: 1;
+        filter: brightness(1);
+      }
+      50% {
+        opacity: 0.85;
+        filter: brightness(1.15) drop-shadow(0 0 4px #facc15);
+      }
+    }
+    
+    /* Pulse effect on accent */
+    .pulse-accent {
+      animation: pulse 2s ease-in-out infinite;
+      animation-delay: 2.5s;
+      transform-origin: 30px 30px;
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 0.3;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.6;
+      }
+    }
+    
+    /* Text animation - slide in from right */
+    .company-text {
+      opacity: 0;
+      transform: translateX(20px);
+      animation: slideInText 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      animation-delay: 1.4s;
+    }
+    
+    @keyframes slideInText {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* Subtle float animation for the whole shield after initial animation */
+    .shield-float {
+      animation: float 4s ease-in-out infinite;
+      animation-delay: 2.5s;
+      transform-origin: 30px 30px;
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-1px);
+      }
+    }
+    
+    /* Ampersand styling */
+    .ampersand {
+      fill: #facc15;
+      font-weight: 400;
+    }
+  </style>
+  
+  <g class="logo-container">
+    <!-- Shield/Icon Group -->
+    <g class="shield-group">
+      <!-- Shield shape with geometric African-inspired angles -->
+      <path d="M30 8 
+               L50 15 
+               L50 35 
+               Q50 48 30 52 
+               Q10 48 10 35 
+               L10 15 
+               Z" 
+            fill="url(#shieldGrad)" 
+            stroke="#ffffff" 
+            stroke-width="1.5"
+            class="shield-float"/>
+      
+      <!-- Inner shield border for depth -->
+      <path d="M30 12 
+               L46 17.5 
+               L46 34 
+               Q46 45 30 48 
+               Q14 45 14 34 
+               L14 17.5 
+               Z" 
+            fill="none" 
+            stroke="#e5e5e5" 
+            stroke-width="0.8"
+            opacity="0.5"/>
+      
+      <!-- Gold accent top of shield -->
+      <path d="M30 8 L50 15 L46 17.5 L30 12 L14 17.5 L10 15 Z" 
+            fill="url(#goldGrad)"
+            class="shimmer-element"/>
+      
+      <!-- U letter with stroke animation -->
+      <!-- Stroke version for drawing effect -->
+      <path class="letter-stroke letter-stroke-u" 
+            d="M20 22 L20 35 Q20 42 26 42 Q32 42 32 35 L32 22"/>
+      
+      <!-- S letter with stroke animation -->
+      <path class="letter-stroke letter-stroke-s" 
+            d="M38 22 L35 22 Q32 22 32 26 Q32 30 38 30 Q44 30 44 35 Q44 40 40 40 L37 40"/>
+      
+      <!-- Filled versions that fade in -->
+      <path class="letter-fill letter-fill-u" 
+            d="M20 22 L20 35 Q20 42 26 42 Q32 42 32 35 L32 22 
+               L29 22 L29 35 Q29 39 26 39 Q23 39 23 35 L23 22 Z"/>
+      
+      <path class="letter-fill letter-fill-s" 
+            d="M38 22 L35 22 Q32 22 32 26 Q32 30 38 30 Q44 30 44 35 Q44 40 40 40 L37 40 
+               L37 37 L40 37 Q41 37 41 35 Q41 33 38 33 Q29 33 29 26 Q29 19 35 19 L38 19 Z"/>
+      
+      <!-- Gold accent pulse ring -->
+      <ellipse cx="30" cy="30" rx="22" ry="18" 
+               fill="none" 
+               stroke="#facc15" 
+               stroke-width="0.5"
+               class="pulse-accent"/>
+    </g>
+    
+    <!-- Company Name Text -->
+    <g class="company-text">
+      <!-- Uniform -->
+      <text x="70" y="28" 
+            font-family="'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+            font-size="20" 
+            font-weight="800" 
+            fill="#ffffff"
+            letter-spacing="-0.02em">
+        Uniform
+      </text>
+      
+      <!-- & with gold color -->
+      <text x="162" y="28" 
+            font-family="'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+            font-size="20" 
+            font-weight="800" 
+            class="ampersand">
+        &amp;
+      </text>
+      
+      <!-- Solution -->
+      <text x="70" y="50" 
+            font-family="'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+            font-size="20" 
+            font-weight="800" 
+            fill="#ffffff"
+            letter-spacing="-0.02em">
+        Solution
+      </text>
+      
+      <!-- Tagline -->
+      <text x="70" y="56" 
+            font-family="'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+            font-size="7" 
+            font-weight="500" 
+            fill="#facc15"
+            letter-spacing="0.05em"
+            opacity="0.9">
+        YOUR ONE STOP SHOP FOR UNIFORMS
+      </text>
+    </g>
+  </g>
+</svg>
