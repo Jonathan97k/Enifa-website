@@ -606,3 +606,12 @@ code { background: var(--panel-3); padding: 1px 6px; border-radius: 4px; font-si
     margin-bottom: 14px;
     text-align: left;
 }
+
+/* ---------- HIDDEN-ATTRIBUTE FIX ---------- */
+/* .app / .login-screen have their own "display" rules that were
+   accidentally beating the browser's default [hidden] behavior,
+   so both screens showed at once. Force it explicitly here. */
+.app[hidden],
+.login-screen[hidden] {
+    display: none !important;
+}
