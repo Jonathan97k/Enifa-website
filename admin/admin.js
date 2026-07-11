@@ -52,7 +52,6 @@
     // --------- Load ---------
     async function loadAll() {
         const res = await fetch('/api/data', { cache: 'no-store' });
-        if (res.status === 401) { showLogin(); return; }
         const data = await res.json();
         state.categories = data.categories || [];
         state.products   = data.products   || [];
@@ -461,97 +460,9 @@
         }
     });
 
-    // ==================================================
-    // ACCOUNT (change password)
-    // ==================================================
-    $('#form-password').addEventListener('submit', async e => {
-        e.preventDefault();
-        const form = e.target;
-        const submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn.disabled = true;
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-        try {
-            const res = await fetch('/api/auth/change-password', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    currentPassword: form.currentPassword.value,
-                    newPassword: form.newPassword.value
-                })
-            });
-            const json = await res.json();
-            if (!res.ok) throw new Error(json.error || 'Could not update password');
-            toast('Password updated', 'success');
-            form.reset();
-        } catch (err) {
-            toast(err.message, 'error');
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
-        }
+    // --------- Init ---------
+    loadAll().catch(err => {
+        console.error(err);
+        toast('Failed to load data: ' + err.message, 'error');
     });
-
-    // ==================================================
-    // AUTH — login gate, session check, logout
-    // ==================================================
-    function showLogin() {
-        $('#loginScreen').hidden = false;
-        $('#appShell').hidden = true;
-    }
-    function showApp() {
-        $('#loginScreen').hidden = true;
-        $('#appShell').hidden = false;
-    }
-
-    $('#form-login').addEventListener('submit', async e => {
-        e.preventDefault();
-        const form = e.target;
-        const btn = $('#btnLogin');
-        const errBox = $('#loginError');
-        errBox.hidden = true;
-        btn.disabled = true;
-        const original = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-        try {
-            const res = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: form.username.value.trim(),
-                    password: form.password.value
-                })
-            });
-            const json = await res.json();
-            if (!res.ok) throw new Error(json.error || 'Login failed');
-            showApp();
-            await loadAll();
-        } catch (err) {
-            errBox.textContent = err.message;
-            errBox.hidden = false;
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = original;
-        }
-    });
-
-    $('#btnLogout').addEventListener('click', async () => {
-        try { await fetch('/api/auth/logout', { method: 'POST' }); } catch { /* ignore */ }
-        showLogin();
-    });
-
-    // --------- Init: check if already logged in ---------
-    (async function init() {
-        try {
-            const res = await fetch('/api/auth/me', { cache: 'no-store' });
-            if (res.ok) {
-                showApp();
-                await loadAll();
-            } else {
-                showLogin();
-            }
-        } catch (err) {
-            showLogin();
-        }
-    })();
 })();

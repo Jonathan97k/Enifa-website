@@ -1,7 +1,6 @@
 const express = require('express');
 const crypto = require('crypto');
 const Product = require('../models/Product');
-const { requireAuth } = require('../middleware/auth');
 const { upload, uploadBufferToCloudinary } = require('../models/cloudinary');
 
 const router = express.Router();
@@ -30,7 +29,7 @@ router.get('/', async (_req, res) => {
 });
 
 // Everything below requires the owner to be logged in
-router.post('/', requireAuth, upload.array('images', 10), async (req, res) => {
+router.post('/', upload.array('images', 10), async (req, res) => {
     try {
         const body = req.body || {};
         if (!body.name) return res.status(400).json({ error: 'Product name is required' });
@@ -53,7 +52,7 @@ router.post('/', requireAuth, upload.array('images', 10), async (req, res) => {
     }
 });
 
-router.put('/:id', requireAuth, upload.array('images', 10), async (req, res) => {
+router.put('/:id', upload.array('images', 10), async (req, res) => {
     try {
         const current = await Product.findOne({ id: req.params.id });
         if (!current) return res.status(404).json({ error: 'Product not found' });
@@ -74,7 +73,7 @@ router.put('/:id', requireAuth, upload.array('images', 10), async (req, res) => 
     }
 });
 
-router.delete('/:id', requireAuth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const removed = await Product.findOneAndDelete({ id: req.params.id });
     if (!removed) return res.status(404).json({ error: 'Product not found' });
     res.json({ ok: true, removed });

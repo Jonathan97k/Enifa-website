@@ -1,6 +1,5 @@
 const express = require('express');
 const Settings = require('../models/Settings');
-const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -15,7 +14,7 @@ router.get('/', async (_req, res) => {
     res.json(doc);
 });
 
-router.put('/', requireAuth, async (req, res) => {
+router.put('/', async (req, res) => {
     const doc = await getOrCreate();
     const body = req.body || {};
     doc.businessName = String(body.businessName ?? doc.businessName ?? '').trim();
