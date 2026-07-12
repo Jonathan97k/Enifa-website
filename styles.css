@@ -1974,3 +1974,19 @@ img, video, iframe { max-width: 100%; height: auto; }
     .p-price { font-size: 0.8rem; }
     .btn-cart { font-size: 0.68rem; padding: 6px; }
 }
+
+/* ---------- NEW ARRIVALS SECTION ---------- */
+.new-arrivals {
+    background: linear-gradient(180deg, rgba(255,193,7,0.06), transparent);
+}
+.na-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--ink);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.7em;
+    font-weight: 700;
+    vertical-align: middle;
+    margin-right: 8px;
+}

@@ -109,6 +109,7 @@
     function renderAll() {
         renderSettings();
         renderHeroBadges();
+        renderNewArrivals();
         renderCategories();
         renderFeatured();
         renderAbout();
@@ -359,6 +360,27 @@
             }
         }
     });
+
+    // --------- New Arrivals (Home Page) ---------
+    function renderNewArrivals() {
+        const section = document.getElementById('newArrivals');
+        const grid = $('#newArrivalsGrid');
+        if (!section || !grid) return;
+
+        const arrivals = state.products
+            .filter(p => isProductNew(p))
+            .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+            .slice(0, 10);
+
+        if (!arrivals.length) {
+            section.style.display = 'none';
+            return;
+        }
+        section.style.display = '';
+        grid.innerHTML = arrivals.map(p => renderProductCard(p)).join('');
+        updateCartButtons();
+        initSlideshows(grid);
+    }
 
     // --------- Featured Products (Home Page) ---------
     let activeFilter = 'all';
