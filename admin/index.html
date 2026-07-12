@@ -24,6 +24,7 @@
     <nav class="nav" id="nav">
         <button class="active" data-section="categories"><i class="fas fa-layer-group"></i> Categories <span class="count" id="countCategories">0</span></button>
         <button data-section="products"><i class="fas fa-box"></i> Products <span class="count" id="countProducts">0</span></button>
+        <button data-section="hero"><i class="fas fa-images"></i> Hero Slideshow</button>
         <button data-section="settings"><i class="fas fa-cog"></i> Site Settings</button>
     </nav>
     <div class="sidebar-foot">
@@ -145,6 +146,56 @@
         </div>
 
         <div id="list-products" class="item-grid"></div>
+    </section>
+
+    <!-- HERO SLIDESHOW -->
+    <section id="section-hero" class="section" hidden>
+        <div class="page-header">
+            <div>
+                <h2><i class="fas fa-images"></i> Hero Slideshow</h2>
+                <div class="subtitle">Choose exactly which photos rotate on the homepage banner, and write your own promotional text for each one. Leave this empty and the homepage will automatically show recent products instead.</div>
+            </div>
+            <button class="btn btn-primary" id="btnNewSlide"><i class="fas fa-plus"></i> New Slide</button>
+        </div>
+
+        <div class="card form-card" id="formCard-slide" hidden>
+            <div class="form-head">
+                <h3><i class="fas fa-plus-circle"></i> <span id="slideFormTitle">Add slide</span></h3>
+                <button class="icon-btn" data-close-form="slide"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="form-slide">
+                <input type="hidden" name="id" id="slideId">
+                <div class="form-grid">
+                    <div class="field full">
+                        <label>Photo *</label>
+                        <div id="slideImgPreview" class="image-manager"></div>
+                        <label class="file-drop">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span class="drop-text">Click to choose a photo</span>
+                            <input type="file" name="image" accept="image/*">
+                        </label>
+                    </div>
+                    <div class="field">
+                        <label>Small label <span style="color:#6b7280;font-weight:400;">(e.g. "Limited Offer", "New Arrival")</span></label>
+                        <input type="text" name="tagText" placeholder="Limited Offer">
+                    </div>
+                    <div class="field">
+                        <label>Order <span style="color:#6b7280;font-weight:400;">(lower numbers show first)</span></label>
+                        <input type="number" name="order" value="0">
+                    </div>
+                    <div class="field full">
+                        <label>Headline text</label>
+                        <input type="text" name="titleText" placeholder="e.g. 50% Off School Blazers This Week">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn" data-close-form="slide">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="save-label">Save Slide</span></button>
+                </div>
+            </form>
+        </div>
+
+        <div id="list-slides" class="item-grid"></div>
     </section>
 
     <!-- SETTINGS -->

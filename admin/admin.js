@@ -35,8 +35,10 @@
         categories: [],
         products: [],
         settings: {},
-        editing: { category: null, product: null },
+        heroSlides: [],
+        editing: { category: null, product: null, slide: null },
         imageState: { category: { keep: [], newFiles: [] }, product: { keep: [], newFiles: [] } },
+        slideImage: { keep: '', newFile: null },
         filter: ''
     };
 
@@ -56,12 +58,14 @@
         state.categories = data.categories || [];
         state.products   = data.products   || [];
         state.settings   = data.settings   || {};
+        state.heroSlides = data.heroSlides || [];
         render();
     }
 
     function render() {
         renderCategories();
         renderProducts();
+        renderSlides();
         renderSettings();
         renderCounts();
         populateCategorySelects();
@@ -221,6 +225,110 @@
         }).join('');
     }
 
+    // ==================================================
+    // HERO SLIDESHOW
+    // ==================================================
+    function renderSlides() {
+        const list = $('#list-slides');
+        if (!list) return;
+        if (!state.heroSlides.length) {
+            list.innerHTML = `<div class="empty"><i class="fas fa-images"></i><h3>No custom slides yet</h3><p>The homepage banner will automatically show recent products until you add slides here.</p></div>`;
+            return;
+        }
+        list.innerHTML = state.heroSlides.map(s => `
+            <div class="item" data-id="${esc(s.id)}">
+                <div class="item-media" style="background-image:url('${esc(s.image)}')"></div>
+                <div class="item-body">
+                    <h4>${esc(s.titleText || '(no headline)')}</h4>
+                    <div class="meta"><span class="pill"><i class="fas fa-tag"></i> ${esc(s.tagText || 'Featured')}</span> <span class="pill">Order: ${s.order ?? 0}</span></div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-sm" data-edit-slide="${esc(s.id)}"><i class="fas fa-pen"></i> Edit</button>
+                    <button class="btn btn-sm btn-danger" data-del-slide="${esc(s.id)}"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    $('#btnNewSlide')?.addEventListener('click', () => openSlideForm(null));
+
+    function openSlideForm(slide) {
+        const card = $('#formCard-slide');
+        card.hidden = false;
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const form = $('#form-slide');
+        form.reset();
+        state.editing.slide = slide ? slide.id : null;
+        state.slideImage = { keep: slide ? (slide.image || '') : '', newFile: null };
+        $('#slideFormTitle').textContent = slide ? 'Edit slide' : 'Add slide';
+        $('#slideId').value = slide ? slide.id : '';
+        if (slide) {
+            form.tagText.value = slide.tagText || '';
+            form.titleText.value = slide.titleText || '';
+            form.order.value = slide.order ?? 0;
+        }
+        renderSlidePreview();
+    }
+    function closeSlideForm() {
+        $('#formCard-slide').hidden = true;
+        state.editing.slide = null;
+    }
+
+    function renderSlidePreview() {
+        const box = $('#slideImgPreview');
+        if (!box) return;
+        if (state.slideImage.newFile) {
+            const url = URL.createObjectURL(state.slideImage.newFile);
+            box.innerHTML = `<div class="img-tile" style="background-image:url('${url}')"></div>`;
+        } else if (state.slideImage.keep) {
+            box.innerHTML = `<div class="img-tile" style="background-image:url('${esc(state.slideImage.keep)}')"></div>`;
+        } else {
+            box.innerHTML = `<div class="img-tile"><i class="fas fa-image"></i></div>`;
+        }
+    }
+
+    $('#form-slide')?.querySelector('input[type="file"]').addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (file) {
+            state.slideImage.newFile = file;
+            renderSlidePreview();
+        }
+    });
+
+    $('#form-slide')?.addEventListener('submit', async e => {
+        e.preventDefault();
+        const form = e.target;
+        const id = state.editing.slide;
+        if (!id && !state.slideImage.newFile) {
+            toast('Please choose a photo for this slide', 'error');
+            return;
+        }
+        const fd = new FormData();
+        fd.append('tagText', form.tagText.value.trim());
+        fd.append('titleText', form.titleText.value.trim());
+        fd.append('order', form.order.value || 0);
+        if (state.slideImage.newFile) fd.append('image', state.slideImage.newFile);
+        else fd.append('existingImage', state.slideImage.keep || '');
+
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        try {
+            const res = await fetch(id ? `/api/hero-slides/${id}` : '/api/hero-slides', {
+                method: id ? 'PUT' : 'POST',
+                body: fd
+            });
+            const json = await res.json();
+            if (!res.ok) throw new Error(json.error || 'Could not save slide');
+            toast(id ? 'Slide updated' : 'Slide added', 'success');
+            closeSlideForm();
+            await loadAll();
+        } catch (err) {
+            toast(err.message, 'error');
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
     $('#btnNewProduct').addEventListener('click', () => {
         if (!state.categories.length) {
             toast('Add a category first — products must belong to one', 'error');
@@ -349,8 +457,29 @@
     document.addEventListener('click', async e => {
         const delCat  = e.target.closest('[data-del-cat]');
         const delProd = e.target.closest('[data-del-prod]');
+        const delSlide = e.target.closest('[data-del-slide]');
         const editCat  = e.target.closest('[data-edit-cat]');
         const editProd = e.target.closest('[data-edit-prod]');
+        const editSlide = e.target.closest('[data-edit-slide]');
+
+        if (editSlide) {
+            const s = state.heroSlides.find(x => x.id === editSlide.dataset.editSlide);
+            if (s) openSlideForm(s);
+            return;
+        }
+        if (delSlide) {
+            const id = delSlide.dataset.delSlide;
+            if (!confirm('Delete this slide?')) return;
+            delSlide.disabled = true;
+            try {
+                const res = await fetch(`/api/hero-slides/${encodeURIComponent(id)}`, { method: 'DELETE' });
+                const json = await res.json();
+                if (!res.ok) throw new Error(json.error || 'Delete failed');
+                toast('Slide deleted', 'success');
+                await loadAll();
+            } catch (err) { toast(err.message, 'error'); delSlide.disabled = false; }
+            return;
+        }
 
         if (editCat) {
             const cat = state.categories.find(c => c.id === editCat.dataset.editCat);
@@ -403,6 +532,7 @@
         e.preventDefault();
         if (close.dataset.closeForm === 'category') closeCategoryForm();
         else if (close.dataset.closeForm === 'product') closeProductForm();
+        else if (close.dataset.closeForm === 'slide') closeSlideForm();
     });
 
     // ==================================================

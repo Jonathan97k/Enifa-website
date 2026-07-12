@@ -29,6 +29,7 @@
         settings: {},
         categories: [],
         products: [],
+        heroSlides: [],
         lightbox: { images: [], index: 0, title: '' }
     };
 
@@ -83,6 +84,7 @@
             state.settings   = data.settings   || {};
             state.categories = data.categories || [];
             state.products   = data.products   || [];
+            state.heroSlides = data.heroSlides || [];
             renderAll();
             route();
         } catch (err) {
@@ -170,18 +172,25 @@
         const slideshow  = $('#heroSlideshow');
         if (!slidesWrap || !slideshow) return;
 
-        // Collect images: products first, then categories, then placeholder
+        // Prefer admin-curated hero slides. Only fall back to automatically
+        // pulling from products/categories if none have been set up yet.
         const items = [];
-        state.products.forEach(p => {
-            if (p.images && p.images[0]) {
-                items.push({ src: p.images[0], name: p.name, type: 'Product', price: p.price });
-            }
-        });
-        state.categories.forEach(c => {
-            if (c.images && c.images[0]) {
-                items.push({ src: c.images[0], name: c.title, type: 'Category' });
-            }
-        });
+        if (state.heroSlides && state.heroSlides.length) {
+            state.heroSlides.forEach(s => {
+                if (s.image) items.push({ src: s.image, name: s.titleText || '', type: s.tagText || 'Featured' });
+            });
+        } else {
+            state.products.forEach(p => {
+                if (p.images && p.images[0]) {
+                    items.push({ src: p.images[0], name: p.name, type: 'Product', price: p.price });
+                }
+            });
+            state.categories.forEach(c => {
+                if (c.images && c.images[0]) {
+                    items.push({ src: c.images[0], name: c.title, type: 'Category' });
+                }
+            });
+        }
         // If no images at all, show placeholder
         if (!items.length) {
             slideshow.classList.add('ready');
